@@ -17,11 +17,10 @@ class AttendanceController extends Controller
     {
         $user = Auth::user();
         $attendance = Attendance::where(['user_id' => $user->id, 'date' => Carbon::today()])->latest()->first();
-
-        if ($attendance && $attendance->check_out_time === null) {
+        if ($attendance && $attendance->check_out_time != null) {
             // Already checked in, show message or perform any other action
-            Session::flash('toast', ['type' => 'error', 'message' => 'Already checked in.']);
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Already checked in.');
+            ;
         }
 
         if (!$attendance) {
@@ -34,13 +33,11 @@ class AttendanceController extends Controller
 
             dispatch(new sendCheckInEmailJob($newAttendance, $user->username));
 
-            Session::flash('toast', ['type' => 'success', 'message' => 'Check-in successful!']);
-            return redirect()->back();
+            return redirect()->back()->with('success', 'Check-in successful');
         }
 
 
-        Session::flash('toast', ['type' => 'error', 'message' => 'You have a pending check-in from a previous date.']);
-        return redirect()->back();
+        return redirect()->back()->with('error', 'You have a pending check-in from a previous date.');
     }
 
     public function checkOut(Request $request)
@@ -49,8 +46,7 @@ class AttendanceController extends Controller
         $attendance = Attendance::where('user_id', $user->id)->latest()->first();
 
         if (!$attendance || $attendance->check_out_time !== null) {
-            Session::flash('toast', ['type' => 'error', 'message' => 'Not checked in yet or already checked out.']);
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Not checked in yet or already checked out.');
         }
 
         $attendance->update([
@@ -59,7 +55,6 @@ class AttendanceController extends Controller
 
         dispatch(new sendCheckOutEmailJob($attendance, $user->username));
 
-        Session::flash('toast', ['type' => 'success', 'message' => 'Check-out successful!']);
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Check-out successful');
     }
 }

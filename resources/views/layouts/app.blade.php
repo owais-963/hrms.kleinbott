@@ -10,6 +10,7 @@
         <div class="container-fluid page-body-wrapper">
             @include('layouts.partials.sidebar')
             <div class="main-panel">
+                @include('layouts.partials.errors')
                 @yield('content')
                 @include('layouts.partials.footer')
             </div>
