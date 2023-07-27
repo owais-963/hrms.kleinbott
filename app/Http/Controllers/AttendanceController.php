@@ -16,7 +16,7 @@ class AttendanceController extends Controller
     public function checkIn(Request $request)
     {
         $user = Auth::user();
-        $attendance = Attendance::where(['user_id' => $user->id, 'date' => Carbon::today()])->latest()->first();
+        $attendance = Attendance::where(['user_id' => $user->id])->latest()->first();
         if ($attendance && $attendance->check_out_time != null) {
             // Already checked in, show message or perform any other action
             return redirect()->back()->with('error', 'Already checked in.');
