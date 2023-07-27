@@ -26,7 +26,7 @@ class AttendanceController extends Controller
         if (!$attendance) {
             // No check-in record exists for the current date, create a new one
             $newAttendance = Attendance::create([
-                'check_in_time' => now(),
+                'check_in_time' => Carbon::now(),
                 'date' => Carbon::today(),
                 'user_id' => $user->id,
             ]);
