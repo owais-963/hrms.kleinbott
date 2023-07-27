@@ -6,7 +6,7 @@
 <body>
 
     <div class="container-scroller">
-        @include('layouts.partials.headER')
+        @include('layouts.partials.header')
         <div class="container-fluid page-body-wrapper">
             @include('layouts.partials.sidebar')
             <div class="main-panel">

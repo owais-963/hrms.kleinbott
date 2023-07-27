@@ -14,15 +14,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+Route::group(['middleware' => ['auth:admin']], function () {
 
-Route::get('/', function () {
-    dd('ddd');
-    return view('welcome');
+    Route::get('/', function () {
+        dd('ddd');
+        return view('welcome');
+    });
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::post('/attendance/check-in', [App\Http\Controllers\AttendanceController::class, 'checkIn'])->name('attendance.check-in');
 Route::post('/attendance/check-out', [App\Http\Controllers\AttendanceController::class, 'checkOut'])->name('attendance.check-out');
