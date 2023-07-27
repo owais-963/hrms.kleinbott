@@ -1,86 +1,62 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<!DOCTYPE html>
+<html lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-
-    <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-</head>
+@include('layouts.partials.head')
 
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            {{-- @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif --}}
-                        @else
-                            <li class="nav-item dropdown">
-                                {{-- <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a> --}}
-
-                                {{-- <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown"> --}}
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                {{-- </div> --}}
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
+    <div class="container-scroller">
+        @include('layouts.partials.headER')
+        <div class="container-fluid page-body-wrapper">
+            @include('layouts.partials.sidebar')
+            <div class="main-panel">
+                @yield('content')
+                @include('layouts.partials.footer')
             </div>
-        </nav>
-
-        <main class="py-4">
-            @yield('content')
-        </main>
+        </div>
     </div>
+
+    <script src="{{ frontVendors('js/vendor.bundle.base.js') }}"></script>
+    <script src="{{ frontVendors('chart.js/Chart.min.js') }}"></script>
+    <script src="{{ frontJs('off-canvas.js') }}"></script>
+    <script src="{{ frontJs('hoverable-collapse.js') }}"></script>
+    <script src="{{ frontJs('template.js') }}"></script>
+    <script src="{{ frontJs('settings.js') }}"></script>
+    <script src="{{ frontJs('todolist.js') }}"></script>
+    <script src="{{ frontJs('dashboard.js') }}"></script>
+
+    @yield('js')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Function to update the live timer
+            function updateLiveTimer(checkInTime) {
+                var startTime = new Date(checkInTime).getTime();
+                var now = new Date().getTime();
+                var duration = now - startTime;
+
+                // Calculate hours, minutes, and seconds
+                var hours = Math.floor(duration / (1000 * 60 * 60));
+                var minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((duration % (1000 * 60)) / 1000);
+
+                // Format the live timer
+                var timerText = hours + "h " + minutes + "m " + seconds + "s ago";
+                $("#liveTimer").text(timerText);
+            }
+
+            // Check if the user has checked in and display the live timer if needed
+            @if ($attendance && $attendance->check_in_time && !$attendance->check_out_time)
+                var checkInTime = "{{ $attendance->check_in_time }}";
+                updateLiveTimer(checkInTime);
+
+                // Update the live timer every second
+                setInterval(function() {
+                    updateLiveTimer(checkInTime);
+                }, 1000);
+            @endif
+        });
+    </script>
 </body>
 
 </html>

@@ -2,27 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\sendCheckInEmailJob;
+use App\Jobs\sendCheckOutEmailJob;
 use App\Models\Attendance;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session; // Add this import statement
+
 
 class AttendanceController extends Controller
 {
     public function checkIn(Request $request)
     {
         $user = Auth::user();
-        $attendance = Attendance::where('user_id', $user->id)->latest()->first();
+        $attendance = Attendance::where(['user_id' => $user->id, 'date' => Carbon::today()])->latest()->first();
 
         if ($attendance && $attendance->check_out_time === null) {
             // Already checked in, show message or perform any other action
-            return redirect()->back()->with('message', 'Already checked in.');
+            Session::flash('toast', ['type' => 'error', 'message' => 'Already checked in.']);
+            return redirect()->back();
         }
 
-        $newAttendance = new Attendance();
-        $newAttendance->check_in_time = now();
-        $newAttendance->user_id = $user->id;
-        $newAttendance->save();
+        if (!$attendance) {
+            // No check-in record exists for the current date, create a new one
+            $newAttendance = Attendance::create([
+                'check_in_time' => now(),
+                'date' => Carbon::today(),
+                'user_id' => $user->id,
+            ]);
 
+            dispatch(new sendCheckInEmailJob($newAttendance, $user->username));
+
+            Session::flash('toast', ['type' => 'success', 'message' => 'Check-in successful!']);
+            return redirect()->back();
+        }
+
+
+        Session::flash('toast', ['type' => 'error', 'message' => 'You have a pending check-in from a previous date.']);
         return redirect()->back();
     }
 
@@ -32,13 +49,17 @@ class AttendanceController extends Controller
         $attendance = Attendance::where('user_id', $user->id)->latest()->first();
 
         if (!$attendance || $attendance->check_out_time !== null) {
-            // Not checked in yet, show message or perform any other action
-            return redirect()->back()->with('message', 'Not checked in yet.');
+            Session::flash('toast', ['type' => 'error', 'message' => 'Not checked in yet or already checked out.']);
+            return redirect()->back();
         }
 
-        $attendance->check_out_time = now();
-        $attendance->save();
+        $attendance->update([
+            'check_out_time' => now(),
+        ]);
 
+        dispatch(new sendCheckOutEmailJob($attendance, $user->username));
+
+        Session::flash('toast', ['type' => 'success', 'message' => 'Check-out successful!']);
         return redirect()->back();
     }
 }

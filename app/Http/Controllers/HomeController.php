@@ -15,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -27,6 +27,7 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         $attendance = Attendance::where('user_id', $user->id)->latest()->first();
-        return view('home', compact('attendance'));
+        $attendance_all = Attendance::where('user_id', $user->id)->latest()->get();
+        return view('home', compact('attendance', 'attendance_all'));
     }
 }
