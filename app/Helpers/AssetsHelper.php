@@ -87,13 +87,24 @@ function frontJs($file = '')
     return asset('assets/js/' . $file);
 }
 
-function getWorkDuration($checkInTime, $checkOutTime) {
-    $checkIn = new \DateTime($checkInTime);
-    $checkOut = new \DateTime($checkOutTime);
-    $interval = $checkIn->diff($checkOut);
+function getWorkDuration($checkin, $checkout)
+{
 
-    // Get the total work hours in decimal format
-    $hours = $interval->h + ($interval->days * 24);
+    $checkinTime = new DateTime($checkin);
+    $checkoutTime = new DateTime($checkout);
 
-    return $hours;
+    // Convert checkout time to next day if it's before check-in time
+    if ($checkoutTime < $checkinTime) {
+        $checkoutTime->modify('+1 day');
+    }
+
+    $workDuration = $checkinTime->diff($checkoutTime);
+    $workHours = $workDuration->h;
+    $workMinutes = $workDuration->i;
+    $workSeconds = $workDuration->s;
+
+    // Format the output in 'hh:mm:ss' style
+    $workTimeFormatted = sprintf('%02d:%02d:%02d', $workHours, $workMinutes, $workSeconds);
+
+    return $workTimeFormatted;
 }

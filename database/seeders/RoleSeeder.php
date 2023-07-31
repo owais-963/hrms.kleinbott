@@ -21,9 +21,8 @@ class RoleSeeder extends Seeder
         Role::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        // Role::create(['name' => 'Super Admin', 'guard_name' => 'admin']);
-        // Role::create(['name' => 'Admin', 'guard_name' => 'admin']);
-        // Role::create(['name' => 'Customer Support  Manager', 'guard_name' => 'support']);
-        // Role::create(['name' => 'Customer Support', 'guard_name' => 'customersupport']);
+        Role::create(['name' => 'Super Admin', 'guard_name' => 'admin']);
+        Role::create(['name' => 'Admin', 'guard_name' => 'admin']);
+        Role::create(['name' => 'Developer', 'guard_name' => 'developer']);
     }
 }

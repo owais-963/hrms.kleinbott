@@ -6,8 +6,8 @@
 <body>
 
     <div class="container-scroller">
-        <div class="container-fluid page-body-wrapper">
-            <div class="main-panel">
+        <div class="bg-transparent container-fluid page-body-wrapper">
+            <div class="justify-content-center main-panel w-100">
                 @yield('content')
             </div>
         </div>

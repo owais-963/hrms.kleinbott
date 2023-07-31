@@ -18,7 +18,7 @@
                     <h6 class="date font-weight-900 mb-0">
                         @if ($attendance && $attendance->check_out_time)
                             <!-- Calculate and display the work duration when checked in and out -->
-                            Worked: {{ getWorkDuration($attendance->check_in_time, $attendance->check_out_time) }}
+                            {{ getWorkDuration($attendance->check_in_time, $attendance->check_out_time) }}
                         @elseif ($attendance && $attendance->check_in_time)
                             <!-- Live timer when checked in but not checked out -->
                             Checked in: <span id="liveTimer"></span>

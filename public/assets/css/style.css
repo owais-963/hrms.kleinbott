@@ -26,6 +26,13 @@ body {
 
 }
 
+.card-header {
+    background: var(--color-4);
+    border-radius: var(--radius);
+    height: 60px;
+}
+
+
 .font-weight-900 {
     font-weight: 900
 }
