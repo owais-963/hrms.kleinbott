@@ -28,10 +28,14 @@ body {
 
 .card-header {
     background: var(--color-4);
-    border-radius: var(--radius);
+    border-radius: var(--radius) !important;
     height: 60px;
 }
 
+.card {
+    background: transparent;
+    border: 0;
+}
 
 .font-weight-900 {
     font-weight: 900

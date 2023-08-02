@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +15,28 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Auth::routes();
+// Auth::routes();
+Route::group(['middleware' => ['guest']], function () {
+
+
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    // Handle login form submission
+    Route::post('/login', [AuthController::class, 'login']);
+    // Handle logout
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/forgot-password', [AuthController::class, 'showForgotPasswordForm'])->name('password.request');
+    // Send reset password link
+    Route::post('/forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+    // Show reset password form
+    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPasswordForm'])->name('password.reset');
+    // Reset password
+    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
+
+
+    
+});
+
+
 Route::group(['middleware' => ['auth:web']], function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
