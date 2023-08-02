@@ -28,7 +28,7 @@ class sendCheckInEmailJob implements ShouldQueue
     {
 
         // dd($this->userName, $this->attendance);
-        Mail::to('admin@kleinbott.com')->send(
+        Mail::to(['admin@kleinbott.com', 'zaeem@kleinbott.com'])->send(
             new CheckInNotification($this->userName, $this->attendance)
         );
     }

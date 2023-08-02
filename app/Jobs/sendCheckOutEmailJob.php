@@ -26,7 +26,7 @@ class sendCheckOutEmailJob implements ShouldQueue
     public function handle()
     {
         // Customize the email content as per your requirements
-        Mail::to('admin@kleinbott.com')->send(
+        Mail::to(['admin@kleinbott.com', 'zaeem@kleinbott.com'])->send(
             new CheckOutNotification($this->userName, $this->attendance)
         );
     }
