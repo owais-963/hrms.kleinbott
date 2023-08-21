@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,21 +32,19 @@ Route::group(['middleware' => ['guest']], function () {
     Route::get('/reset-password/{token}', [AuthController::class, 'showResetPasswordForm'])->name('password.reset');
     // Reset password
     Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
-
-
-    
 });
 
 
 Route::group(['middleware' => ['auth:web']], function () {
-    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
 
     Route::resource('roles', RoleController::class);
 
     Route::resource('users', UserController::class);
 
+    Route::post('/get-calendar-data', [HomeController::class, 'getCalendarData'])->name('get.calendar.data');
 
 
     Route::post('/attendance/check-in', [App\Http\Controllers\AttendanceController::class, 'checkIn'])->name('attendance.check-in');

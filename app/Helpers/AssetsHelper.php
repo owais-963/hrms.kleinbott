@@ -106,5 +106,5 @@ function getWorkDuration($checkin, $checkout)
     // Format the output in 'hh:mm:ss' style
     $workTimeFormatted = sprintf('%02d:%02d:%02d', $workHours, $workMinutes, $workSeconds);
 
-    return $workTimeFormatted;
+    return $workTimeFormatted ?? '-';
 }

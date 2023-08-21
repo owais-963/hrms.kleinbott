@@ -32,4 +32,18 @@ class HomeController extends Controller
         $attendance_all = Attendance::where('user_id', $user->id)->latest()->get();
         return view('home', compact('attendance', 'attendance_all'));
     }
+    public function getCalendarData(Request $request)
+    {
+        $selectedMonth = $request->input('month', date('m'));
+        $startDate = Carbon::createFromDate(date('Y'), $selectedMonth, 1)->startOfMonth();
+        $endDate = $startDate->copy()->endOfMonth();
+
+        $attendance_all = Attendance::where('user_id', Auth::user()->id)
+            ->whereBetween('date', [$startDate, $endDate])
+            ->orderBy('date')
+            ->get();
+        // dd($attendance_all);
+
+        return view('calendar_data', compact('attendance_all', 'selectedMonth'));
+    }
 }

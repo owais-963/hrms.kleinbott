@@ -69,7 +69,7 @@ return [
     |
     */
 
-    'timezone' => 'Asia/Karachi',
+    'timezone' => env('APP_TIMEZONE', 'UTC'),
 
     /*
     |--------------------------------------------------------------------------
@@ -137,7 +137,7 @@ return [
     */
 
     'providers' => [
-            /*
+        /*
              * Laravel Framework Service Providers...
              */
         Illuminate\Auth\AuthServiceProvider::class,
@@ -162,7 +162,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-            /*
+        /*
              * Package Service Providers...
              */
         Brian2694\Toastr\ToastrServiceProvider::class,
@@ -170,15 +170,16 @@ return [
         Stevebauman\Location\LocationServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
 
-            /*
+        /*
              * Application Service Providers...
              */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-            // App\Providers\BroadcastServiceProvider::class,
+        // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
+        App\Providers\ViewServiceProvider::class,
     ],
 
     /*
@@ -198,5 +199,6 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Location' => Stevebauman\Location\Facades\Location::class,
         'BrowserDetect' => hisorange\BrowserDetect\Facade::class,
+        'Carbon' => 'Carbon\Carbon',
     ])->toArray()
 ];

@@ -7,8 +7,8 @@
                 <img src="{{ frontImage('faces/face5.jpg') }}" class="circle" alt="profile" />
                 <div class="ml-3">
 
-                    <span class="menu-title purple-color fs-1rem">Profile</span> <br>
-                    <span class="menu-title text-white"> designation</span>
+                    <span class="menu-title purple-color fs-1rem">{{ $currentUser->username }}</span> <br>
+                    <span class="menu-title text-white"> {{ $currentUser->username }}</span>
                 </div>
             </a>
         </li>

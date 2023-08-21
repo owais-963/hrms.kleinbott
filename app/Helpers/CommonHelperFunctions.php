@@ -14,6 +14,16 @@ use Illuminate\Support\Facades\DB;
 
 
 
+if (!function_exists('convertDatabaseTime')) {
+    function convertDatabaseTime($dbTime)
+    {
+        return $dbTime;
+        // return $carbonTime->setTimezone('Asia/karachi')->format('Y-m-d h:i:s A');
+    }
+}
+
+
+
 if (!function_exists('generate_token')) {
     function generate_token($length = 10)
     {
