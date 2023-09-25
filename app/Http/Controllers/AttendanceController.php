@@ -24,7 +24,6 @@ class AttendanceController extends Controller
             'attendance_id' => $attendance->id,
             'user_id' => $user->id,
         ])->latest()->get();
-        dd($breaks);
         $attendance_all = Attendance::where('user_id', $user->id)->latest()->get();
         return view('attendance', compact('attendance', 'attendance_all'));
     }
