@@ -54,13 +54,13 @@
                 var seconds = Math.floor((duration % (1000 * 60)) / 1000);
 
                 // Format the live timer
-                var timerText = hours + "h " + minutes + "m " + seconds + "s ago";
-                $("#liveTimer").text(timerText);
+                var timerText = hours + " : " + minutes + " : " + seconds + "";
+                $(".liveTimer").text(timerText);
             }
 
             // Check if the user has checked in and display the live timer if needed
             @if ($attendance && $attendance->check_in_time && !$attendance->check_out_time)
-                var checkInTime = "{{ $attendance->check_in_time }}";
+                var checkInTime = "{{ ConvertTimeZone($attendance->check_in_time) }}";
                 updateLiveTimer(checkInTime);
 
                 // Update the live timer every second

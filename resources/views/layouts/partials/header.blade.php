@@ -21,7 +21,7 @@
                             {{ getWorkDuration($attendance->check_in_time, $attendance->check_out_time) }}
                         @elseif ($attendance && $attendance->check_in_time)
                             <!-- Live timer when checked in but not checked out -->
-                            Checked in: <span id="liveTimer"></span>
+                            Checked in: <span class="liveTimer"></span>
                         @endif
                     </h6>
                 </a>

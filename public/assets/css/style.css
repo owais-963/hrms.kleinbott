@@ -29,7 +29,9 @@ body {
 .card-header {
     background: var(--color-4);
     border-radius: var(--radius) !important;
-    height: 60px;
+    padding: 20px;
+    border-bottom-left-radius: unset !important;
+    border-bottom-right-radius: unset !important;
 }
 
 .card {
@@ -39,6 +41,19 @@ body {
 
 .font-weight-900 {
     font-weight: 900
+}
+
+ul {
+    list-style: none;
+}
+
+.br-6 {
+    border-radius: 6px !important;
+}
+
+.h-300-scroll {
+    height: 300px;
+    overflow: auto;
 }
 
 .fs-1rem {
@@ -77,7 +92,6 @@ body {
 .sidebar {
     border-radius: var(--radius);
     background-color: var(--main-dark);
-    width: 300px;
 
 }
 

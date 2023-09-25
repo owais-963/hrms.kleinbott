@@ -13,13 +13,91 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
+if (!function_exists('ConvertTimeZone')) {
+    function ConvertTimeZone($dbTime)
+    {
+        if ($dbTime) {
+
+            $dateTime = new Carbon($dbTime);
+
+            // Set the timezone to Asia/Karachi
+            $dateTime->setTimezone('Asia/Karachi');
+
+            // Format the datetime as "11:45pm"
+            $formattedTime = $dateTime->format('h:ia');
+
+            return $dateTime;
+        } else {
+            return "00:00";
+        }
+    }
+}
 
 if (!function_exists('convertDatabaseTime')) {
     function convertDatabaseTime($dbTime)
     {
-        return $dbTime;
-        // return $carbonTime->setTimezone('Asia/karachi')->format('Y-m-d h:i:s A');
+        if ($dbTime) {
+
+            $dateTime = new Carbon($dbTime);
+
+            // Set the timezone to Asia/Karachi
+            $dateTime->setTimezone('Asia/Karachi');
+
+            // Format the datetime as "11:45pm"
+            $formattedTime = $dateTime->format('h:ia');
+
+            return $formattedTime;
+        } else {
+            return "00:00";
+        }
     }
+}
+if (!function_exists('isDurationGreaterThanOrEqualTo9Hours')) {
+
+
+    function isDurationGreaterThanOrEqualTo9Hours($timeDuration)
+
+    {
+        // Split the time duration into hours, minutes, and seconds
+        list($hours, $minutes, $seconds) = explode(":", $timeDuration);
+
+        // Convert hours to an integer
+        $hours = intval($hours);
+
+        // Check if the duration is greater than or equal to 9 hours
+        return ($hours >= 9);
+    }
+}
+if (!function_exists('removeDomainNameEmail')) {
+    function removeDomainNameEmail($email)
+    {
+        $email = explode('@', $email);
+        return $email[0];
+    }
+}
+
+
+
+function getWorkDuration($checkin, $checkout)
+{
+
+    $checkinTime = new DateTime($checkin);
+    $checkoutTime = new DateTime($checkout);
+
+    // Convert checkout time to next day if it's before check-in time
+    if ($checkoutTime < $checkinTime) {
+        $checkoutTime->modify('+1 day');
+    }
+
+    $workDuration = $checkinTime->diff($checkoutTime);
+    $workHours = $workDuration->h;
+    $workMinutes = $workDuration->i;
+    $workSeconds = $workDuration->s;
+
+    // Format the output in 'hh:mm:ss' style
+    $workTimeFormatted = sprintf('%02d:%02d:%02d', $workHours, $workMinutes, $workSeconds);
+
+    return $workTimeFormatted ?? '-';
 }
 
 

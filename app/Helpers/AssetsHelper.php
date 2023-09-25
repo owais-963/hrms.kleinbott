@@ -86,25 +86,3 @@ function frontJs($file = '')
 {
     return asset('assets/js/' . $file);
 }
-
-function getWorkDuration($checkin, $checkout)
-{
-
-    $checkinTime = new DateTime($checkin);
-    $checkoutTime = new DateTime($checkout);
-
-    // Convert checkout time to next day if it's before check-in time
-    if ($checkoutTime < $checkinTime) {
-        $checkoutTime->modify('+1 day');
-    }
-
-    $workDuration = $checkinTime->diff($checkoutTime);
-    $workHours = $workDuration->h;
-    $workMinutes = $workDuration->i;
-    $workSeconds = $workDuration->s;
-
-    // Format the output in 'hh:mm:ss' style
-    $workTimeFormatted = sprintf('%02d:%02d:%02d', $workHours, $workMinutes, $workSeconds);
-
-    return $workTimeFormatted ?? '-';
-}

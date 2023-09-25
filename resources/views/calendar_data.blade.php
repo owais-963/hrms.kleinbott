@@ -25,7 +25,7 @@
 
     .responsive-table.table th {
         background-color: #952aea;
-        width: 25%;
+        width: 1%;
         color: white;
     }
 </style>
@@ -36,8 +36,8 @@
             <th class="fw-bold">Date</th>
             <th class="fw-bold">Check-in Time</th>
             <th class="fw-bold">Check-out Time</th>
-            <th class="fw-bold">hours</th>
-            <th class="fw-bold">status</th>
+            <th class="fw-bold">Hours</th>
+            <th class="fw-bold">Action</th>
         </tr>
     </thead>
 
@@ -56,8 +56,15 @@
                     @if ($attendance->date == $currentDate->format('Y-m-d'))
                         <td>{{ convertDatabaseTime($attendance->check_in_time) }}</td>
                         <td>{{ convertDatabaseTime($attendance->check_out_time) ?? '-' }}</td>
-                        <td>{{ getWorkDuration($attendance->check_in_time, $attendance->check_out_time) }}</td>
-                        <td>-</td>
+                        @if (isDurationGreaterThanOrEqualTo9Hours(getWorkDuration($attendance->check_in_time, $attendance->check_out_time)))
+                            <td class="text-success">
+                                {{ $attendance->check_out_time ? getWorkDuration($attendance->check_in_time, $attendance->check_out_time) : '00-00' }}
+                            </td>
+                        @else
+                            <td class="text-danger">
+                                {{ $attendance->check_out_time ? getWorkDuration($attendance->check_in_time, $attendance->check_out_time) : '00-00' }}
+                            </td>
+                        @endif
                         @php
                             $attendanceFound = true;
                         @endphp
@@ -68,8 +75,13 @@
                 <td>-</td>
                 <td>-</td>
                 <td>-</td>
-                <td>-</td>
             @endif
+
+            <td>-</td>
+
+
+            </td>
+
         </tr>
         @php
             $currentDate->addDay();

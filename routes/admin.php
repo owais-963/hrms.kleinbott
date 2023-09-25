@@ -34,6 +34,10 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
+
+Route::get('/', function () {
+    dd('Welcome to admin route file.');
+});
 Route::group(['middleware' => ['guest']], function () {
     Route::get('/', [AdminLoginController::class, 'index'])->name('auth.admin.login.showform');
     Route::post('login', [AdminLoginController::class, 'login'])->name('auth.admin.login.process');

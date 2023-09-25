@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -15,23 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-// Auth::routes();
 Route::group(['middleware' => ['guest']], function () {
-
-
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-    // Handle login form submission
     Route::post('/login', [AuthController::class, 'login']);
-    // Handle logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/forgot-password', [AuthController::class, 'showForgotPasswordForm'])->name('password.request');
-    // Send reset password link
-    Route::post('/forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
-    // Show reset password form
-    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPasswordForm'])->name('password.reset');
-    // Reset password
-    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 });
 
 
@@ -44,9 +32,12 @@ Route::group(['middleware' => ['auth:web']], function () {
 
     Route::resource('users', UserController::class);
 
-    Route::post('/get-calendar-data', [HomeController::class, 'getCalendarData'])->name('get.calendar.data');
+    Route::post('/get-calendar-data', [AttendanceController::class, 'getCalendarData'])->name('get.calendar.data');
+    Route::get('/user/attendance', [AttendanceController::class, 'index'])->name('attendance');
 
 
-    Route::post('/attendance/check-in', [App\Http\Controllers\AttendanceController::class, 'checkIn'])->name('attendance.check-in');
-    Route::post('/attendance/check-out', [App\Http\Controllers\AttendanceController::class, 'checkOut'])->name('attendance.check-out');
+    Route::post('/attendance/check-in', [AttendanceController::class, 'checkIn'])->name('attendance.check-in');
+    Route::post('/attendance/check-out', [AttendanceController::class, 'checkOut'])->name('attendance.check-out');
+    Route::post('/break/store', [AttendanceController::class, 'store'])->name('break.store');
+    Route::get('/break/back', [AttendanceController::class, 'back'])->name('break.back');
 });

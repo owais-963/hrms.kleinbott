@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
+use App\Models\UserBreak;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,8 +30,12 @@ class HomeController extends Controller
 
         $user = Auth::user();
         $attendance = Attendance::where('user_id', $user->id)->latest()->first();
+        $breaks = UserBreak::where([
+            'attendance_id' => $attendance->id,
+            'user_id' => $user->id,
+        ])->latest()->get();
         $attendance_all = Attendance::where('user_id', $user->id)->latest()->get();
-        return view('home', compact('attendance', 'attendance_all'));
+        return view('home', compact('attendance', 'attendance_all', 'breaks'));
     }
     public function getCalendarData(Request $request)
     {

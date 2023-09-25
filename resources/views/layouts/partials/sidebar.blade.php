@@ -15,9 +15,15 @@
 
 
         <li class="nav-item">
-            <a class="nav-link" href="/">
+            <a class="nav-link" href="{{ route('home') }}">
                 <i class="typcn typcn-device-desktop menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('attendance') }}">
+                <i class="typcn typcn-calendar-outline menu-icon"></i>
+                <span class="menu-title">Attendance</span>
                 <div class="badge badge-danger">new</div>
             </a>
         </li>
