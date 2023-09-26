@@ -80,6 +80,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(LoginDetailActivity::class, 'user_id', 'id');
     }
+    public function shift()
+    {
+        return $this->belongsTo(Shift::class);
+    }
 
     /**
      * The get Fullname attribute
@@ -280,5 +284,4 @@ class User extends Authenticatable
 
         return $role;
     }
-
 }

@@ -32,7 +32,7 @@ class ViewServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
             if (Auth::user()) {
 
-                $user = User::find(Auth::user()->id);
+                $user = User::with('shift')->find(Auth::user()->id);
                 $view->with('currentUser', $user);
             }
         });

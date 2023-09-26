@@ -1,11 +1,11 @@
 <x-mail::message>
-    # Check-in Notification
+    # Break-Start Notification
 
     Hello admin
 
-    {{ $user->username }} Employee id ({{ $user->employee_id }}), have successfully checked in at
+    {{ $user->username }} Employee id ({{ $user->employee_id }}), have start break at
     {{ $break->start_time }}.
-  
+
 
     Thank you for using our system.
 

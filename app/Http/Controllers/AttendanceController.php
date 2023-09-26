@@ -7,6 +7,7 @@ use App\Jobs\sendCheckInEmailJob;
 use App\Jobs\sendCheckOutEmailJob;
 use App\Jobs\StartBreakJob;
 use App\Models\Attendance;
+use App\Models\User;
 use App\Models\UserBreak;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -47,7 +48,8 @@ class AttendanceController extends Controller
     }
     public function checkIn(Request $request)
     {
-        $user = Auth::user();
+        $user = User::with('shift')->find(Auth::user()->id);
+
         $attendance = Attendance::where(['user_id' => $user->id, 'date' => Carbon::today()])->latest()->first();
         if ($attendance && $attendance->check_out_time != null) {
             // Already checked in, show message or perform any other action
@@ -74,9 +76,7 @@ class AttendanceController extends Controller
     public function checkOut(Request $request)
     {
         $user = Auth::user();
-        $attendance = Attendance::where(['user_id' => $user->id, 'date' => Carbon::today()])->latest()->first();
-
-
+        $attendance = Attendance::where('user_id', $user->id)->latest()->first();
         if (!$attendance || $attendance->check_out_time !== null) {
             return redirect()->back()->with('error', 'Not checked in yet or already checked out.');
         }
@@ -88,6 +88,20 @@ class AttendanceController extends Controller
         dispatch(new sendCheckOutEmailJob($attendance, $user->username));
 
         return redirect()->back()->with('success', 'Check-out successful');
+    }
+
+    function save_note(Request $request)
+    {
+        $user = Auth::user();
+        $attendance = Attendance::find($request->attendance_id);
+
+
+        $attendance->update([
+            'note' => $request->note,
+        ]);
+        return redirect()->back()->with('success', 'note successful');
+
+        // dispatch(new sendCheckOutEmailJob($attendance, $user->username));
     }
 
     public function store(Request $request)

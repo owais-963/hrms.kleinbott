@@ -35,6 +35,7 @@ Route::group(['middleware' => ['auth:web']], function () {
     Route::post('/get-calendar-data', [AttendanceController::class, 'getCalendarData'])->name('get.calendar.data');
     Route::get('/user/attendance', [AttendanceController::class, 'index'])->name('attendance');
 
+    Route::post('/save-note', [AttendanceController::class, 'save_note'])->name('save.note');
 
     Route::get('/attendance/check-in', [AttendanceController::class, 'checkIn'])->name('attendance.check-in');
     Route::get('/attendance/check-out', [AttendanceController::class, 'checkOut'])->name('attendance.check-out');
