@@ -56,6 +56,8 @@
                     <div id="">
 
 
+                        {{-- $dayoff = [mon,sun]
+                        $holiday  = [[date =>01-09-2023, note=>'abc'],[date =>04-09-2023, note=>'abc']] --}}
 
                         <table class="bg-white br-30 responsive-table table">
                             <thead>
@@ -94,30 +96,34 @@
                                                         {{ $attendance->check_out_time ? getWorkDuration($attendance->check_in_time, $attendance->check_out_time) : '00-00' }}
                                                     </td>
                                                 @endif
+                                                <td>{{ $attendance->note }}</td>
+                                                <td>
+                                                    <!-- Button to trigger modal -->
+                                                    <a href="#" class="btn btn-primary note-button"
+                                                        data-attendance-id="{{ $attendance->id }}"
+                                                        data-note="{{ $attendance->note ?? '' }}">
+                                                        Discrepancy
+                                                    </a>
+                                                    <!-- Modal -->
+
+
+                                                </td>
                                                 @php
                                                     $attendanceFound = true;
                                                 @endphp
                                             @break
                                         @endif
                                     @endforeach
+
+
                                     @if (!$attendanceFound)
+                                        <td>-</td>
+                                        <td>-</td>
                                         <td>-</td>
                                         <td>-</td>
                                         <td>-</td>
                                     @endif
 
-                                    <td>{{ $attendance->note }}</td>
-                                    <td>
-                                        <!-- Button to trigger modal -->
-                                        <a href="#" class="btn btn-primary note-button"
-                                            data-attendance-id="{{ $attendance->id }}"
-                                            data-note="{{ $attendance->note ?? '' }}">
-                                            Note
-                                        </a>
-                                        <!-- Modal -->
-
-
-                                    </td>
 
 
                                     </td>
@@ -144,14 +150,14 @@
                 <!-- Add a hidden input field for attendance_id -->
                 <input type="hidden" id="attendanceIdInput" name="attendance_id" value="">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="noteModalLabel">Late Mark Note</h5>
+                    <h5 class="modal-title text-black" id="noteModalLabel">Late Mark Note</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="note">Note:</label>
+                        <label for="note" class=" text-black">Note:</label>
                         <textarea class="form-control" id="note" name="note"></textarea>
                     </div>
                 </div>
@@ -193,7 +199,6 @@
 <script>
     $(document).ready(function() {
         $('.note-button').click(function() {
-            alert('abc');
             // Get the data from the clicked button
             var attendanceId = $(this).data('attendance-id');
             var existingNote = $(this).data('note');

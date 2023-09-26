@@ -95,10 +95,10 @@ class AttendanceController extends Controller
         $user = Auth::user();
         $attendance = Attendance::find($request->attendance_id);
 
-
         $attendance->update([
             'note' => $request->note,
         ]);
+   
         return redirect()->back()->with('success', 'note successful');
 
         // dispatch(new sendCheckOutEmailJob($attendance, $user->username));

@@ -8,6 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Attendance extends Model
 {
     use HasFactory;
-    protected $fillable = ['check_in_time', 'check_out_time', 'user_id', 'date'];
-
+    protected $guarded = [];
 }
