@@ -19,7 +19,7 @@ class ShiftSeeder extends Seeder
         $shifts = [
             [
                 'start_time' => '15:00:00',
-                'end_time' => '12:00:00',
+                'end_time' => '00:00:00',
                 'status' => 1,
             ],
             [
