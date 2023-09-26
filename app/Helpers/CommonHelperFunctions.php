@@ -41,7 +41,7 @@ if (!function_exists('convertDatabaseTime')) {
             $dateTime = new Carbon($dbTime);
 
             // Set the timezone to Asia/Karachi
-            $dateTime->setTimezone('Asia/Karachi');
+            // $dateTime->setTimezone('Asia/Karachi');
 
             // Format the datetime as "11:45pm"
             $formattedTime = $dateTime->format('h:ia');
