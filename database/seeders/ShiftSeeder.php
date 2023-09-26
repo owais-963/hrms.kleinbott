@@ -33,7 +33,7 @@ class ShiftSeeder extends Seeder
                 'status' => 1,
             ],
         ];
-
+        
         DB::table('shifts')->insert($shifts);
     }
 }
