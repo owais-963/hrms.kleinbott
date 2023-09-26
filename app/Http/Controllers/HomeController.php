@@ -34,8 +34,13 @@ class HomeController extends Controller
             'attendance_id' => $attendance->id,
             'user_id' => $user->id,
         ])->latest()->get();
+        $latestBreak = UserBreak::where([
+            'attendance_id' => $attendance->id,
+            'user_id' => $user->id,
+        ])->latest()->first();
+        // dd($latest_break);
         $attendance_all = Attendance::where('user_id', $user->id)->latest()->get();
-        return view('home', compact('attendance', 'attendance_all', 'breaks'));
+        return view('home', compact('attendance', 'attendance_all', 'breaks', 'latestBreak'));
     }
     public function getCalendarData(Request $request)
     {

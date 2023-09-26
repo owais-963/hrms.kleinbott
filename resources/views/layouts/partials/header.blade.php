@@ -13,7 +13,7 @@
     <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end dark-bg">
 
         <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item nav-date dropdown">
+            {{-- <li class="nav-item nav-date dropdown">
                 <a class="bg-white br-30 btn btn-outline-light text-black">
                     <h6 class="date font-weight-900 mb-0">
                         @if ($attendance && $attendance->check_out_time)
@@ -43,7 +43,7 @@
                         <button type="submit" class="btn theme-button">Check Out</button>
                     </form>
                 </li>
-            @endif
+            @endif --}}
         </ul>
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
             data-toggle="offcanvas">

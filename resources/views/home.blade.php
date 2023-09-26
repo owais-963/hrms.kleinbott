@@ -65,20 +65,26 @@
                                         @endif
                                     </ul>
                                     <ul>
+
+                                        {{-- @dd ($break,$break && $break->start_time !== null && $break->end_time !== null) --}}
+
+                                        @if ($latestBreak && $latestBreak->start_time !== null && $latestBreak->end_time !== null)
+                                        <!-- Latest break is ongoing, display "Start Break" button -->
                                         <li>
                                             <form action="{{ route('break.store') }}" method="post">
                                                 @csrf
                                                 <div class="form-group d-flex">
-
-                                                    <input type="text" class="form-control" name="note"
-                                                        placeholder="Break note">
-                                                    <button class="ms-2 btn theme-button">break</button>
+                                                    <input type="text" class="form-control" name="note" placeholder="Break note">
+                                                    <button class="ms-2 btn theme-button">Start Break</button>
                                                 </div>
                                             </form>
                                         </li>
+                                    @else
+                                        <!-- No breaks exist or the latest break has ended, display "Break Back" button -->
                                         <li class="m-2">
-                                            <a href="{{ route('break.back') }}" class="btn theme-button">break Back</a>
+                                            <a href="{{ route('break.back') }}" class="btn theme-button">Break Back</a>
                                         </li>
+                                    @endif
                                     </ul>
 
 

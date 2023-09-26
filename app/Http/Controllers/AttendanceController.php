@@ -24,6 +24,8 @@ class AttendanceController extends Controller
             'attendance_id' => $attendance->id,
             'user_id' => $user->id,
         ])->latest()->get();
+
+
         $attendance_all = Attendance::where('user_id', $user->id)->latest()->get();
         return view('attendance', compact('attendance', 'attendance_all'));
     }
@@ -110,7 +112,6 @@ class AttendanceController extends Controller
                 'note' => $request->note,
                 'date' => Carbon::today(),
             ]);
-
             return redirect()->back()->with('success', 'Break started successfully.');
         } else {
             return redirect()->back()->with('error', 'You cannot start a break without first checking in.');
