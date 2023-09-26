@@ -29,7 +29,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('attendances', function (Blueprint $table) {
-            $table->dropColumn(['note', 'status', 'shift_start_time', 'shift_end_time']);
+            $table->dropColumn(['note', 'status']);
         });
     }
 };
