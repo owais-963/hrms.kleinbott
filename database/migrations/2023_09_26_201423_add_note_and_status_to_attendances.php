@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::table('attendances', function (Blueprint $table) {
             $table->string('note')->nullable();
             $table->tinyInteger('status')->comment('1 approve, 0 late')->default(0);
+            $table->time('shift_start_time')->nullable();
+            $table->time('shift_end_time')->nullable();
         });
     }
 
