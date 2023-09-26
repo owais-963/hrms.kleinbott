@@ -75,7 +75,31 @@ if (!function_exists('removeDomainNameEmail')) {
         return $email[0];
     }
 }
+if (!function_exists('calculateTotalBreakDuration')) {
+    function calculateTotalBreakDuration($breaks)
+    {
+        $totalDuration = Carbon::now()->diffInSeconds(Carbon::now()); // Initialize total duration to zero
 
+        foreach ($breaks as $break) {
+            if ($break->start_time && $break->end_time) {
+                $startTime = Carbon::parse($break->start_time);
+                $endTime = Carbon::parse($break->end_time);
+
+                // Calculate the duration for this break in seconds
+                $breakDuration = $endTime->diffInSeconds($startTime);
+
+                // Add the duration to the total duration
+                $totalDuration += $breakDuration;
+            }
+        }
+
+        // Calculate total hours and minutes
+        $totalHours = floor($totalDuration / 3600); // 3600 seconds in an hour
+        $totalMinutes = floor(($totalDuration % 3600) / 60); // 60 seconds in a minute
+
+        return ['hours' => $totalHours, 'minutes' => $totalMinutes];
+    }
+}
 
 
 function getWorkDuration($checkin, $checkout)

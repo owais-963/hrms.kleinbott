@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class CheckInNotification extends Mailable
+class EndBreakEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -18,14 +18,13 @@ class CheckInNotification extends Mailable
      *
      * @return void
      */
+    protected $break;
+    protected $user;
 
-    protected $attendance;
-    protected $userName;
-
-    public function __construct($userName, $attendance)
+    public function __construct($user, $break)
     {
-        $this->attendance = $attendance;
-        $this->userName = $userName;
+        $this->break = $break;
+        $this->user = $user;
     }
 
     /**
@@ -36,7 +35,7 @@ class CheckInNotification extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Check In Notification',
+            subject: 'End Break Email',
         );
     }
 
@@ -45,11 +44,13 @@ class CheckInNotification extends Mailable
      *
      * @return \Illuminate\Mail\Mailables\Content
      */
+
     public function content()
     {
+
         return new Content(
-            markdown: 'emails.checkin',
-            with: ['userName' => $this->userName, 'attendance' => $this->attendance]
+            markdown: 'emails.endbreak',
+            with: ['user' => $this->user, 'break' => $this->break]
         );
     }
 

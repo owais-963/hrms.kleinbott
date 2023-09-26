@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -37,14 +38,13 @@ return new class extends Migration {
             // Profile Information
             $table->string('image')->default('user.png');
             $table->text('about')->nullable();
-            $table->integer('designation')->nullable();
+            $table->integer('designation_id')->nullable();
             $table->string('cnic')->nullable();
-            $table->integer('employee_no')->nullable(); // Corrected 'employee_no' to 'employeeNO'
-
+            $table->integer('employee_id')->nullable();
             // Appointment Information
-            $table->date('Appointment_Date')->nullable(); // Corrected 'Appointment Date' to 'Appointment_Date'
-            $table->integer('Department')->nullable();
-            $table->integer('Branch')->nullable();
+            $table->date('appointment_Date')->nullable();
+            $table->integer('department_id')->nullable();
+            $table->integer('branch_id')->nullable();
 
             // Email Verification
             $table->timestamp('email_verified_at')->nullable();
@@ -65,6 +65,7 @@ return new class extends Migration {
 
             // Foreign Key to Roles Table
             $table->foreignId('role_id')->nullable();
+            $table->foreignId('shift_id')->nullable();
 
             $table->softDeletes(); // Soft Delete (if required)
             $table->rememberToken(); // Remember Token for authentication

@@ -13,14 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_breaks', function (Blueprint $table) {
-            $table->id();
-            $table->integer('user_id');
-            $table->integer('attendance_id');
-            $table->timestamp('start_time')->nullable();
-            $table->timestamp('end_time')->nullable();
+        Schema::table('attendances', function (Blueprint $table) {
             $table->string('note')->nullable();
-            $table->timestamps();
+            $table->tinyInteger('status')->comment('1 approve, 0 late')->default(0);
         });
     }
 
@@ -31,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_breaks');
+        Schema::table('attendances', function (Blueprint $table) {
+            $table->dropColumn(['note', 'status']);
+        });
     }
 };

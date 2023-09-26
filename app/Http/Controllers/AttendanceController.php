@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\EndBreakJob;
 use App\Jobs\sendCheckInEmailJob;
 use App\Jobs\sendCheckOutEmailJob;
+use App\Jobs\StartBreakJob;
 use App\Models\Attendance;
 use App\Models\UserBreak;
 use Carbon\Carbon;
@@ -98,20 +100,22 @@ class AttendanceController extends Controller
         // Check if a check-in has been made for the current day
         if ($attendance && $attendance->check_in_time !== null) {
             // Check if a break is already ongoing
-            $break = UserBreak::where(['user_id' => $user->id, 'date' => Carbon::today()])->latest()->first();
+            $break = UserBreak::where(['user_id' => $user->id, 'attendance_id' => $attendance->id,])->latest()->first();
 
             if ($break && $break->break_start_time && !$break->break_end_time) {
                 return redirect()->back()->with('error', 'You have a pending break from a previous date.');
             }
 
             // Create a new UserBreak instance for the current user and date
-            $breakabc =    UserBreak::create([
+            $break =    UserBreak::create([
                 'attendance_id' => $attendance->id,
                 'user_id' => $user->id,
                 'start_time' => Carbon::now(),
                 'note' => $request->note,
-                'date' => Carbon::today(),
             ]);
+
+            StartBreakJob::dispatch($break, $user); // Replace $user with the actual user
+
             return redirect()->back()->with('success', 'Break started successfully.');
         } else {
             return redirect()->back()->with('error', 'You cannot start a break without first checking in.');
@@ -129,13 +133,13 @@ class AttendanceController extends Controller
         // Check if a check-in has been made for the current day
         if ($attendance && $attendance->check_in_time !== null) {
             // Check if a break is ongoing
-            $break = UserBreak::where(['user_id' => $user->id, 'date' => Carbon::today()])->latest()->first();
+            $break = UserBreak::where(['user_id' => $user->id, 'attendance_id' => $attendance->id,])->latest()->first();
             if ($break && $break->start_time && !$break->end_time) {
                 // Update the ongoing break with the end time
                 $break->update([
-                    'start_time' => $break->start_time,
                     'end_time' =>  Carbon::now(),
                 ]);
+                EndBreakJob::dispatch($break, $user); // Replace $user with the actual user
 
                 return redirect()->back()->with('success', 'Break ended successfully.');
             } else {

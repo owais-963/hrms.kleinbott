@@ -39,8 +39,10 @@ class HomeController extends Controller
             'user_id' => $user->id,
         ])->latest()->first();
         // dd($latest_break);
+        $totalBreakDuration = calculateTotalBreakDuration($breaks);
+
         $attendance_all = Attendance::where('user_id', $user->id)->latest()->get();
-        return view('home', compact('attendance', 'attendance_all', 'breaks', 'latestBreak'));
+        return view('home', compact('attendance', 'attendance_all', 'breaks', 'latestBreak', 'totalBreakDuration'));
     }
     public function getCalendarData(Request $request)
     {
