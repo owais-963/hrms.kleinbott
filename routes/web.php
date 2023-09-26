@@ -36,8 +36,8 @@ Route::group(['middleware' => ['auth:web']], function () {
     Route::get('/user/attendance', [AttendanceController::class, 'index'])->name('attendance');
 
 
-    Route::post('/attendance/check-in', [AttendanceController::class, 'checkIn'])->name('attendance.check-in');
-    Route::post('/attendance/check-out', [AttendanceController::class, 'checkOut'])->name('attendance.check-out');
+    Route::get('/attendance/check-in', [AttendanceController::class, 'checkIn'])->name('attendance.check-in');
+    Route::get('/attendance/check-out', [AttendanceController::class, 'checkOut'])->name('attendance.check-out');
     Route::post('/break/store', [AttendanceController::class, 'store'])->name('break.store');
     Route::get('/break/back', [AttendanceController::class, 'back'])->name('break.back');
 });
