@@ -39,7 +39,7 @@ Route::get('/', function () {
     dd('Welcome to admin route file.');
 });
 Route::group(['middleware' => ['guest']], function () {
-    Route::get('/', [AdminLoginController::class, 'index'])->name('auth.admin.login.showform');
+    Route::get('/', [AdminLoginController::class, 'showLoginForm'])->name('auth.admin.login.showform');
     Route::post('login', [AdminLoginController::class, 'login'])->name('auth.admin.login.process');
     Route::post('login/modal', [AdminLoginController::class, 'login_modal'])->name('auth.login.process.modal');
     Route::get('forgot', [AdminLoginController::class, 'forgot'])->name('auth.forgot.showform');
