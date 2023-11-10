@@ -1,0 +1,52 @@
+[15-Jul-2023 00:46:33 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/kleihlfo/hrms.kleinbott.com/config/app.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/kleihlfo/hrms.kleinbott.com/config/app.php on line 18
+[15-Jul-2023 00:46:33 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/kleihlfo/hrms.kleinbott.com/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/kleihlfo/hrms.kleinbott.com/config/cache.php on line 18
+[15-Jul-2023 00:46:35 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/kleihlfo/hrms.kleinbott.com/config/logging.php:20
+Stack trace:
+#0 {main}
+  thrown in /home/kleihlfo/hrms.kleinbott.com/config/logging.php on line 20
+[15-Jul-2023 00:46:35 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/kleihlfo/hrms.kleinbott.com/config/mail.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/kleihlfo/hrms.kleinbott.com/config/mail.php on line 16
+[15-Jul-2023 00:46:35 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/kleihlfo/hrms.kleinbott.com/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/kleihlfo/hrms.kleinbott.com/config/filesystems.php on line 16
+[15-Jul-2023 00:46:35 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function resource_path() in /home/kleihlfo/hrms.kleinbott.com/config/view.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/kleihlfo/hrms.kleinbott.com/config/view.php on line 17
+[15-Jul-2023 00:46:35 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/kleihlfo/hrms.kleinbott.com/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/kleihlfo/hrms.kleinbott.com/config/queue.php on line 16
+[15-Jul-2023 00:46:35 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/kleihlfo/hrms.kleinbott.com/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/kleihlfo/hrms.kleinbott.com/config/session.php on line 21
+[15-Jul-2023 00:46:35 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/kleihlfo/hrms.kleinbott.com/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/kleihlfo/hrms.kleinbott.com/config/services.php on line 18
+[15-Jul-2023 00:46:35 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/kleihlfo/hrms.kleinbott.com/config/sanctum.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/kleihlfo/hrms.kleinbott.com/config/sanctum.php on line 16
+[15-Jul-2023 00:46:35 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/kleihlfo/hrms.kleinbott.com/config/database.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/kleihlfo/hrms.kleinbott.com/config/database.php on line 18
+[15-Jul-2023 00:46:35 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/kleihlfo/hrms.kleinbott.com/config/broadcasting.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/kleihlfo/hrms.kleinbott.com/config/broadcasting.php on line 18
+[15-Jul-2023 00:46:35 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/kleihlfo/hrms.kleinbott.com/config/hashing.php:32
+Stack trace:
+#0 {main}
+  thrown in /home/kleihlfo/hrms.kleinbott.com/config/hashing.php on line 32
