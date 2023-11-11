@@ -12,11 +12,26 @@
                         <div class="col-lg-4 col-sm 12">
                             <div class="card bg-white">
                                 <div class="card-header">
+                                    @empty($totalBreakDuration)
+                                    Total break duration: -- hours and -- minutes
+                                    @else
                                     Total break duration: {{ $totalBreakDuration['hours'] }} hours and
                                     {{ $totalBreakDuration['minutes'] }} minutes
+                                    @endempty
+                                </div>
+                                <div class="card-body">
                                 </div>
                                 <div class="card-body h-300-scroll ">
                                     <ul class="p-0 text-black text-start">
+                                        @empty($totalBreakDuration)
+
+                                        <li class="bg-light border-bottom br-6 p-2 py-3 mb-3">
+                                            -- Break start
+                                            -- end
+                                            --
+                                        </li>
+
+                                        @else
                                         @foreach ($breaks as $break)
                                             <li class="bg-light border-bottom br-6 p-2 py-3 mb-3">
                                                 {{ $break->note }} Break start
@@ -24,6 +39,7 @@
                                                 {{ $break->end_time ? convertDatabaseTime($break->end_time) : 'Ongoing' }}
                                             </li>
                                         @endforeach
+                                        @endempty
                                     </ul>
                                 </div>
                             </div>

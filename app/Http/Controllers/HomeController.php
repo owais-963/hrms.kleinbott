@@ -30,17 +30,24 @@ class HomeController extends Controller
 
         $user = Auth::user();
         $attendance = Attendance::where('user_id', $user->id)->latest()->first();
-        $breaks = UserBreak::where([
-            'attendance_id' => $attendance->id,
-            'user_id' => $user->id,
-        ])->latest()->get();
-        $latestBreak = UserBreak::where([
-            'attendance_id' => $attendance->id,
-            'user_id' => $user->id,
-        ])->latest()->first();
-        // dd($latest_break);
-        $totalBreakDuration = calculateTotalBreakDuration($breaks);
-
+        if ($attendance) {
+                // check if today is break time or not
+            $breaks = UserBreak::where([
+                'attendance_id' => $attendance->id,
+                'user_id' => $user->id,
+            ])->latest()->get();
+            $latestBreak = UserBreak::where([
+                'attendance_id' => $attendance->id,
+                'user_id' => $user->id,
+            ])->latest()->first();
+            // dd($latest_break);
+            $totalBreakDuration = calculateTotalBreakDuration($breaks);
+            }
+            else {
+            $breaks = null;
+            $latestBreak = null;
+            $totalBreakDuration = null;
+            }
         $attendance_all = Attendance::where('user_id', $user->id)->latest()->get();
         return view('home', compact('attendance', 'attendance_all', 'breaks', 'latestBreak', 'totalBreakDuration'));
     }
